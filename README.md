@@ -15,7 +15,7 @@ Note that the `pcaspy_server.py` uses the usbtmc interface, but it should be sim
 ## List of available EPICS variables
 
 EPICS name | Description
-------------------------
+-----------|------------
 METROLAB:Block | Length of block captures
 METROLAB:Average | Number of averaged values per block
 METROLAB:Period | Length of time between triggers for a measurement
