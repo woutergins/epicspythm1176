@@ -3,7 +3,7 @@ import time
 from pcaspy import Driver, SimpleServer, Severity
 import threading as th
 import queue
-from thm1176usbtmc import thm1176MF
+import thm1176MFusbtmc as thm1176MF
 from usbtmc.usbtmc import find_device
 
 prefix = 'METROLAB:'
