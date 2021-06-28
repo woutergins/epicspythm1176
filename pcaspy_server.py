@@ -3,8 +3,7 @@ import time
 from pcaspy import Driver, SimpleServer, Severity
 import threading as th
 import queue
-import thm1176MF
-import usbtmc
+from thm1176usbtmc import thm1176MF
 from usbtmc.usbtmc import find_device
 
 prefix = 'METROLAB:'
@@ -12,7 +11,7 @@ prefix = 'METROLAB:'
 pvdb = {
         'Block'   : {'type': 'int', 'value': 1},
         'Average' : {'type': 'int', 'value': 200},
-        'Period'  : {'type': 'float', 'value': 0.001},
+        'Period'  : {'type': 'float', 'value': 0.001, 'unit': 's'},
 
         'Trigger' : {'type': 'enum', 'enums': [''], 'value': 0},
         'Range'   : {'type': 'enum', 'enums': [''], 'value': 0},
@@ -40,12 +39,11 @@ class THM1176MFDriver(Driver):
         period = self.getParam('Period')
         average = self.getParam('Average')
         block = self.getParam('Block')
-        api = 'usbtmc'
 
         self.setParam('Connected', 0)
         self.updatePVs()
         self.instruction_queue = queue.Queue()
-        self.device = thm1176MF.thm1176(address=r, period=period, average=average, block=block, api=api)
+        self.device = thm1176MF.thm1176(address=r, period=period, average=average, block=block)
 
         ranges = list(self.device.ranges)
         ranges.append('AUTO')
@@ -183,9 +181,8 @@ class THM1176MFDriver(Driver):
                 period = self.getParam('Period')
                 average = self.getParam('Average')
                 block = self.getParam('Block')
-                api = 'usbtmc'
 
-                self.device = thm1176MF.thm1176(address=r, period=period, average=average, block=block, api=api)
+                self.device = thm1176MF.thm1176(address=r, period=period, average=average, block=block)
             self.updatePVs()
 
     def write(self, reason, value):
